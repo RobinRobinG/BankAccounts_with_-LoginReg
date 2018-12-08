@@ -1,0 +1,49 @@
+@model BankAccount.Models.UserAccount;
+@{
+    ViewData["Title"] = "Account Page";
+}
+<h1>Welcome @Model.UserName~</h1>
+
+<form asp-action="AddTransaction" asp-controller="BankAccount" method="POST">
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label"></label>
+        <input asp-for="UserName" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Balance" class="control-label"></label>
+        <input asp-for="Balance" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="DepositOrWithdrawalAmount" class="control-label"></label>
+        <input asp-for="DepositOrWithdrawalAmount" class="form-control" />
+        <span asp-validation-for="DepositOrWithdrawalAmount"></span>
+    </div>
+    <input type="submit" />
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (var row in @Model.Transactions.AsEnumerable().Reverse())
+        {
+        <tr>
+            <td scope="col">@row.TransactionId</td>
+            <td scope="col">@row.Amount</td>
+            <td scope="col">@row.Date</td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<a href="/logout">Logout</a>
+
+
+
